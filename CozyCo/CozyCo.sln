@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozyCo", "CozyCo\CozyCo.csproj", "{EB2C0440-58C3-428C-AA33-8633DF29C931}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozyCo.Model", "CozyCo.Model\CozyCo.Model.csproj", "{A3413B9A-CD90-402A-BA5A-DDD62923598C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EB2C0440-58C3-428C-AA33-8633DF29C931}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB2C0440-58C3-428C-AA33-8633DF29C931}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB2C0440-58C3-428C-AA33-8633DF29C931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3413B9A-CD90-402A-BA5A-DDD62923598C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3413B9A-CD90-402A-BA5A-DDD62923598C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3413B9A-CD90-402A-BA5A-DDD62923598C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3413B9A-CD90-402A-BA5A-DDD62923598C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
