@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CozyCo.Models;
+using CozyCo.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CozyCo.WebUI.Controllers
@@ -31,8 +31,14 @@ namespace CozyCo.WebUI.Controllers
         [HttpPost] 
         public IActionResult Add(Property newProperty) // -> receive data from form
         {
-            Properties.Add(newProperty);
-            return View(nameof(Index), Properties);
+            if (ModelState.IsValid) // all required fields are completed
+            {
+                // We should be able to add the new property
+                Properties.Add(newProperty);
+                return View(nameof(Index), Properties);
+            }
+
+            return View("Form");
         }
 
         public IActionResult Detail(int id) //  -> get id from the URL
@@ -61,15 +67,22 @@ namespace CozyCo.WebUI.Controllers
         // get updated property from FORM
         public IActionResult Edit(int id, Property updatedProperty)
         {
-            var oldProperty = Properties.Single(p => p.Id == id);
+            if (ModelState.IsValid)
+            {
 
-            oldProperty.Address = updatedProperty.Address;
-            oldProperty.Address2 = updatedProperty.Address2;
-            oldProperty.City = updatedProperty.City;
-            oldProperty.Image = updatedProperty.Image;
-            oldProperty.Zipcode = updatedProperty.Zipcode;
+                var oldProperty = Properties.Single(p => p.Id == id);
 
-            return View(nameof(Index), Properties);
+                oldProperty.Address = updatedProperty.Address;
+                oldProperty.Address2 = updatedProperty.Address2;
+                oldProperty.City = updatedProperty.City;
+                oldProperty.Image = updatedProperty.Image;
+                oldProperty.Zipcode = updatedProperty.Zipcode;
+
+                return View(nameof(Index), Properties);
+            }
+
+            return View("Form", updatedProperty); // By passing updatedProperty, We trigger the logic
+                                                  // for edit within the Form.cshtml
         }
     }
 }
