@@ -23,6 +23,7 @@ namespace CozyCo.Domain.Models
 
         public string Image { get; set; }
 
+       
 
     }
 }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CozyCo.Data.Implementation.SqlServer;
+using CozyCo.Data.Interfaces;
+using CozyCo.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +34,10 @@ namespace CozyCo
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // match a interface with a implementation
+            // wherever we have dependency in a constructor
+            services.AddSingleton<IPropertyService, PropertyService>();
+            services.AddSingleton<IPropertyRepository, SqlServerPropertyRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
