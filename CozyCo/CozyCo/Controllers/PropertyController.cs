@@ -25,67 +25,66 @@ namespace CozyCo.WebUI.Controllers
         }
 
 
-    //    // GET property/add
-    //    public IActionResult Add()
-    //    {
-    //        return View("Form"); 
-    //    }
+        // GET property/add
+        public IActionResult Add()
+        {
+            return View("Form");
+        }
 
-    //    [HttpPost] 
-    //    public IActionResult Add(Property newProperty) // -> receive data from form
-    //    {
-    //        if (ModelState.IsValid) // all required fields are completed
-    //        {
-    //            // We should be able to add the new property
-    //            Properties.Add(newProperty);
-    //            return View(nameof(Index), Properties);
-    //        }
+        [HttpPost]
+        public IActionResult Add(Property newProperty) // -> receive data from form
+        {
+            if (ModelState.IsValid) // all required fields are completed
+            {
+                // We should be able to add the new property
+                _propertyService.Create(newProperty);
+                // service receives the new property
+                // service sent the new property to repository (saved)
 
-    //        return View("Form");
-    //    }
+                return RedirectToAction(nameof(Index)); // -> Index(); method above
+            }
 
-    //    public IActionResult Detail(int id) //  -> get id from the URL
-    //    {
-    //        // Need to know what Id to look for
-    //        var property = Properties.Single(p => p.Id == id);
-    //        return View(property);
-    //    }
+            return View("Form");
+        }
 
-    //    public IActionResult Delete(int id)
-    //    {
-    //        var property = Properties.Single(p => p.Id == id);
-    //        Properties.Remove(property);
-    //        return View(nameof(Index), Properties);
-    //    }
+        public IActionResult Detail(int id) //  -> get id from the URL
+        {
+            // Need to know what Id to look for
+            var property = _propertyService.GetById(id);
+            return View(property);
+        }
 
-    //    public IActionResult Edit(int id) // --> get id from URL
-    //    {
-    //        var property = Properties.Single(p => p.Id == id);
+        public IActionResult Delete(int id)
+        {
+            var succeeded = _propertyService.Delete(id);
 
-    //        return View("Form", property);
-    //    }
+            if (!succeeded) // when delete fails (false)
+                ViewBag.Error = "Sorry, the property could not be deleted, try again later.";
 
-    //    [HttpPost]
-    //    // get id from URL
-    //    // get updated property from FORM
-    //    public IActionResult Edit(int id, Property updatedProperty)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
+            return RedirectToAction(nameof(Index));
+        }
 
-    //            var oldProperty = Properties.Single(p => p.Id == id);
+        public IActionResult Edit(int id) // --> get id from URL
+        {
+            var property = _propertyService.GetById(id);
 
-    //            oldProperty.Address = updatedProperty.Address;
-    //            oldProperty.Address2 = updatedProperty.Address2;
-    //            oldProperty.City = updatedProperty.City;
-    //            oldProperty.Image = updatedProperty.Image;
-    //            oldProperty.Zipcode = updatedProperty.Zipcode;
+            return View("Form", property);
+        }
 
-    //            return View(nameof(Index), Properties);
-    //        }
+        [HttpPost]
+        // get id from URL
+        // get updated property from FORM
+        public IActionResult Edit(int id, Property updatedProperty)
+        {
+            if (ModelState.IsValid)
+            {
+                _propertyService.Update(updatedProperty);
 
-    //        return View("Form", updatedProperty); // By passing updatedProperty, We trigger the logic
-    //                                              // for edit within the Form.cshtml
-    //    }
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("Form", updatedProperty); // By passing updatedProperty, We trigger the logic
+                                                  // for edit within the Form.cshtml
+        }
     }
 }

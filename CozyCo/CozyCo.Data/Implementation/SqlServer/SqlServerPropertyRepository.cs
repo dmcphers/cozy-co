@@ -26,7 +26,8 @@ namespace CozyCo.Data.Implementation.SqlServer
             using (var context = new CozyCoDbContext())
             {
                 // SQL -> database look for table properties
-                var property = context.Properties.Single(p => p.Id == id);
+                // if none found then return null value rather than an exception
+                var property = context.Properties.SingleOrDefault(p => p.Id == id);
                 return property;
             }
         }
@@ -52,6 +53,7 @@ namespace CozyCo.Data.Implementation.SqlServer
                 context.Entry(oldProperty).CurrentValues.SetValues(updatedProperty);
 
                 // save changes
+                context.Properties.Update(oldProperty);
                 context.SaveChanges();
                 return oldProperty; // to ensure that the save happened
             }

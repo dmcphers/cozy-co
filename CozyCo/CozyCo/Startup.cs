@@ -34,12 +34,21 @@ namespace CozyCo
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // match a interface with a implementation
-            // wherever we have dependency in a constructor
-            services.AddSingleton<IPropertyService, PropertyService>();
-            services.AddSingleton<IPropertyRepository, SqlServerPropertyRepository>();
+            AddServiceImplementation(services);
+
+            AddRepositoryImplementation(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        }
+
+        private void AddRepositoryImplementation(IServiceCollection services)
+        {
+            services.AddSingleton<IPropertyRepository, SqlServerPropertyRepository>();
+        }
+
+        private void AddServiceImplementation(IServiceCollection services)
+        {
+            services.AddSingleton<IPropertyService, PropertyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
