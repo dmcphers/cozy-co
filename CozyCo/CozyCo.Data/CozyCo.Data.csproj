@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190430003737_added-geo-location.cs" />
+    <Compile Remove="Migrations\20190509010535_add-property-property-type-relationship.cs" />
   </ItemGroup>
 
   <ItemGroup>

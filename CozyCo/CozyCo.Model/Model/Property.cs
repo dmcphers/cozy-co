@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CozyCo.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -23,7 +24,8 @@ namespace CozyCo.Domain.Models
 
         public string Image { get; set; }
 
-       
-
+        // Fully Defined Relationship
+        public int PropertyTypeId { get; set;}
+        public PropertyType PropertyType { get; set; }
     }
 }

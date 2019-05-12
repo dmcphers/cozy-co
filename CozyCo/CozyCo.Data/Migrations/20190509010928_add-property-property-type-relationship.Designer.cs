@@ -3,14 +3,16 @@ using CozyCo.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CozyCo.Data.Migrations
 {
     [DbContext(typeof(CozyCoDbContext))]
-    partial class CozyCoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190509010928_add-property-property-type-relationship")]
+    partial class addpropertypropertytyperelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
