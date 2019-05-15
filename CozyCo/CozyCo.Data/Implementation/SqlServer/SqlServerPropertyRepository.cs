@@ -1,6 +1,6 @@
 ﻿using CozyCo.Data.Context;
 using CozyCo.Data.Interfaces;
-using CozyCo.Domain.Models;
+using CozyCo.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

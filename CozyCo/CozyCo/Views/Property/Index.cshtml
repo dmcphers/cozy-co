@@ -1,10 +1,10 @@
 ﻿@* Model Definition*@
 @model List<Property>
 
-@if (ViewBag.Error != null)
+@if (ViewData["Error"] != null)
 {
     <div class="alert alert-danger" role="alert">
-        @ViewBag.Error
+        @ViewData["Error"]
     </div>
 }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CozyCo.Domain.Models;
+using CozyCo.Domain.Model;
 using CozyCo.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +10,28 @@ namespace CozyCo.WebUI.Controllers
 {
     public class PropertyController : Controller
     {
+        private const string PROPERTYTYPES = "PropertyTypes"; 
         private readonly IPropertyService _propertyService;
+        private readonly IPropertyTypeService _propertyTypeService;
 
-        public PropertyController(IPropertyService propertyService)
+        public PropertyController(IPropertyService propertyService,
+            IPropertyTypeService propertyTypeService)
         {
             _propertyService = propertyService;
+            _propertyTypeService = propertyTypeService;
         }
 
         // property/index
         public IActionResult Index()
         {
+            // check if there is any error in tempdata
+            if(TempData["Error"] !=null)
+            {
+                // pass that error to the viewdata because communicating between action and view
+                ViewData.Add("Error", TempData["Error"]);
+
+            }
+
             var properties = _propertyService.GetAllProperties();
             return View(properties);
         }
@@ -28,6 +40,9 @@ namespace CozyCo.WebUI.Controllers
         // GET property/add
         public IActionResult Add()
         {
+            var propertyTypes = _propertyTypeService.GetAll();
+            ViewData.Add("PROPERTYTYPES", propertyTypes);
+
             return View("Form");
         }
 
@@ -59,7 +74,8 @@ namespace CozyCo.WebUI.Controllers
             var succeeded = _propertyService.Delete(id);
 
             if (!succeeded) // when delete fails (false)
-                ViewBag.Error = "Sorry, the property could not be deleted, try again later.";
+                // using tempdata because we are communicating between actions - from delete to index
+                TempData.Add("Error","Sorry, the property could not be deleted, try again later.");
 
             return RedirectToAction(nameof(Index));
         }

@@ -1,5 +1,4 @@
 ﻿using CozyCo.Domain.Model;
-using CozyCo.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
