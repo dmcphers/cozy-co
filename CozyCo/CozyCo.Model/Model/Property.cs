@@ -24,8 +24,14 @@ namespace CozyCo.Domain.Model
 
         public string Image { get; set; }
 
-        // Fully Defined Relationship
+        // Fully Defined Relationship for property type
+        [Display(Name = "Property Type")]
         public int PropertyTypeId { get; set;}
         public PropertyType PropertyType { get; set; }
+
+        // Fully Defined Relationship for appuser
+        public string AppUserId { get; set; }
+        public AppUser Landlord { get; set; }
+
     }
 }

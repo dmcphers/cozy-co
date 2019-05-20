@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CozyCo.Data.Context;
 using CozyCo.Data.Implementation.SqlServer;
 using CozyCo.Data.Interfaces;
+using CozyCo.Domain.Model;
 using CozyCo.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,8 +37,14 @@ namespace CozyCo
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            AddServiceImplementation(services);
+            // Add DbContext as a service
+            services.AddDbContext<CozyCoDbContext>();
 
+            // Add Identity as a service
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<CozyCoDbContext>();
+
+            AddServiceImplementation(services);
             AddRepositoryImplementation(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -45,7 +54,6 @@ namespace CozyCo
         {
             services.AddSingleton<IPropertyRepository, SqlServerPropertyRepository>();
             services.AddSingleton<IPropertyTypeRepository, SqlServerPropertyTypeRepository>();
-
         }
 
         private void AddServiceImplementation(IServiceCollection services)

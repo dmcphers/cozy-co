@@ -40,9 +40,7 @@ namespace CozyCo.WebUI.Controllers
         // GET property/add
         public IActionResult Add()
         {
-            var propertyTypes = _propertyTypeService.GetAll();
-            ViewData.Add("PROPERTYTYPES", propertyTypes);
-
+            GetPropertyTypes();
             return View("Form");
         }
 
@@ -59,6 +57,8 @@ namespace CozyCo.WebUI.Controllers
                 return RedirectToAction(nameof(Index)); // -> Index(); method above
             }
 
+
+            GetPropertyTypes();
             return View("Form");
         }
 
@@ -101,6 +101,12 @@ namespace CozyCo.WebUI.Controllers
 
             return View("Form", updatedProperty); // By passing updatedProperty, We trigger the logic
                                                   // for edit within the Form.cshtml
+        }
+
+        private void GetPropertyTypes()
+        {
+            var propertyTypes = _propertyTypeService.GetAll();
+            ViewData.Add("PROPERTYTYPES", propertyTypes);
         }
     }
 }

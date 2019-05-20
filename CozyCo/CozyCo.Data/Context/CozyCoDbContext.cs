@@ -1,4 +1,5 @@
 ﻿using CozyCo.Domain.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CozyCo.Data.Context
 
     // DbContext --> represent a session to a db and provides APIs
     // to communicate with the db
-    public class CozyCoDbContext : DbContext
+    public class CozyCoDbContext : IdentityDbContext<AppUser>
     {
         // Per Model that we want to turn into a table
         // we add it as a DbSet
@@ -33,6 +34,9 @@ namespace CozyCo.Data.Context
         // change the default relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // base = IdentityDbContext
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<PropertyType>().HasData(
                     new PropertyType {Id=1, Description = "Condo"},
                     new PropertyType {Id=2, Description = "Single Family Home" },
