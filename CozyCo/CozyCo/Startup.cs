@@ -46,6 +46,7 @@ namespace CozyCo
 
             AddServiceImplementation(services);
             AddRepositoryImplementation(services);
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -79,6 +80,7 @@ namespace CozyCo
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
