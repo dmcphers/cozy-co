@@ -19,6 +19,7 @@ namespace CozyCo.Data.Context
         // they map to table by default
         public DbSet<Property> Properties { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
+        public DbSet<Lease> Leases { get; set; }
 
         // virtual method designed to be overriden
         // you can provide configuration for the context
@@ -42,6 +43,22 @@ namespace CozyCo.Data.Context
                     new PropertyType {Id=2, Description = "Single Family Home" },
                     new PropertyType {Id=3, Description = "Duplex" }
                 );
+
+            // Adding Lease as the table inbetween Property and AppUser
+
+            modelBuilder.Entity<Lease>()
+                .HasKey(l => new { l.PropertyId, l.TenantId}); // combined PK
+
+            modelBuilder.Entity<Lease>() // Tenant is a AppUser
+                .HasOne(l => l.Tenant)
+                .WithMany(t => t.Leases) 
+                .HasForeignKey(l => l.TenantId);
+
+            modelBuilder.Entity<Lease>()
+                .HasOne(l => l.Property)
+                .WithMany(p => p.Leases)
+                .HasForeignKey(l => l.PropertyId);
+                
         }
     }
 }

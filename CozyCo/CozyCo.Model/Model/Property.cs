@@ -33,5 +33,7 @@ namespace CozyCo.Domain.Model
         public string AppUserId { get; set; }
         public AppUser Landlord { get; set; }
 
+        public ICollection<Lease> Leases { get; set; }
+
     }
 }
